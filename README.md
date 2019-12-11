@@ -1,6 +1,6 @@
 # ECommerceAppSwiftUI
 
-For PartialSheet package:
+After download the project kindly add PartialSheet package:
 
 In Xcode 11 or grater, in you project, select: File > Swift Packages > Add Pacakage Dependency.
 
