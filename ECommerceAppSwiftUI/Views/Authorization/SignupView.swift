@@ -157,7 +157,7 @@ struct SignupView: View {
                         FacebookLogInButton()
                     }
                 }
-            }.navigationBarTitle(Text("Sign up"), displayMode: .automatic)
+            }.navigationBarTitle(Text("Sign up"), displayMode: .inline)
         }
     }
 }

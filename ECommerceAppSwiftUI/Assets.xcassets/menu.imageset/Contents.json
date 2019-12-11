@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-facebook-circled-40.png",
+      "filename" : "icons8-menu-vertical-24.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-facebook-circled-80.png",
+      "filename" : "icons8-menu-vertical-48.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icons8-menu-vertical-72.png",
       "scale" : "3x"
     }
   ],

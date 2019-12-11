@@ -120,7 +120,7 @@ struct LogInView: View {
                     }
                 }
             }
-            .navigationBarTitle(Text("Login"), displayMode: .automatic)
+            .navigationBarTitle(Text("Login"), displayMode: .inline)
         }
     }
 }

@@ -64,7 +64,7 @@ struct ForgetPasswordView: View {
                     Spacer()
                 }
             }
-            .navigationBarTitle(Text("Forget Password"), displayMode: .automatic)
+            .navigationBarTitle(Text("Forget Password"), displayMode: .inline)
         }
     }
 }

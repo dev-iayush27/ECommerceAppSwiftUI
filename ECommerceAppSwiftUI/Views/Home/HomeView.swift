@@ -10,6 +10,10 @@ import SwiftUI
 
 struct HomeView: View {
     
+    init() {
+        UINavigationBar.appearance().barTintColor = .white
+    }
+    
     let arrCloth = Cloth.all()
     
     fileprivate func SaleView() -> some View {
@@ -17,7 +21,7 @@ struct HomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Sale")
-                        .font(.title)
+                        .font(.headline)
                         .bold()
                         .padding(.bottom, 5)
                     Text("Super Summer Sale")
@@ -25,7 +29,9 @@ struct HomeView: View {
                         .foregroundColor(.gray)
                 }.padding(.leading, 15)
                 Spacer()
-                Button(action: {}) {
+                Button(action: {
+                    
+                }) {
                     Text("See All")
                         .padding(.trailing, 15)
                         .foregroundColor(.gray)
@@ -39,7 +45,7 @@ struct HomeView: View {
                 }
                 .padding(.leading, 10)
             })
-        }.padding(.top, 65)
+        }.padding(.top, 20)
     }
     
     fileprivate func TrendingView() -> some View {
@@ -47,7 +53,7 @@ struct HomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Trending")
-                        .font(.title)
+                        .font(.headline)
                         .bold()
                         .padding(.bottom, 5)
                     Text("You have never seen it before")
@@ -69,25 +75,25 @@ struct HomeView: View {
                 }
                 .padding(.leading, 10)
             })
-        }.padding(.top, 10)
+        }.padding(.top, 15)
     }
     
     fileprivate func TopBannerView() -> some View {
         return Image("banner")
             .resizable()
-            .aspectRatio(contentMode: .fill)
-            .edgesIgnoringSafeArea(.all)
-            .frame(height: 120)
+            .aspectRatio(4/3, contentMode: .fit)
     }
     
     var body: some View {
-        VStack {
+        NavigationView {
             ScrollView {
-                TopBannerView()
-                SaleView()
-                TrendingView()
+                VStack {
+                    TopBannerView()
+                    SaleView()
+                    TrendingView()
+                }
             }
-            Spacer()
+            .navigationBarTitle(Text("Home"), displayMode: .inline)
         }
     }
 }
@@ -98,40 +104,41 @@ struct ItemCell: View {
     
     fileprivate func TopLabel() -> some View {
         return Text(cloth.type == "new" ? "New" : "-20%")
-            .font(.headline)
-            .padding([.trailing, .leading], 10)
-            .frame(height: 30)
+            .font(.footnote)
+            .padding([.trailing, .leading], 8)
+            .frame(height: 25)
             .background(cloth.type == "new" ? Color.init(hex: "222222") : Color.init(hex: "DB3022"))
-            .cornerRadius(15)
+            .cornerRadius(12.5)
             .foregroundColor(.white)
-            .shadow(color: .gray, radius: 1, x: 0.5, y: 0.5)
+            .shadow(color: Color.init(hex: "444444"), radius: 1, x: 0.5, y: 0.5)
     }
     
     fileprivate func FevoriteButton() -> some View {
-        return Button(action: {}) {
-            Image(systemName: "heart")
-                .foregroundColor(.gray)
-                .frame(width: 45, height: 45)
+        return Button(action: {
+            print("Name: \(self.cloth.name)")
+        }) {
+            Image(systemName: cloth.isFevorite == true ? "heart.fill" : "heart")
+                .foregroundColor(cloth.isFevorite == true ? .red :.gray)
+                .frame(width: 40, height: 40)
                 .background(Color.white)
         }
-        .cornerRadius(22.5)
-        .shadow(color: .gray, radius: 0.8, x: 0.5, y: 0.5)
-        .offset(x: 126, y: 145)
+        .cornerRadius(20)
+        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            ZStack(alignment: .topLeading) {
-                Image(cloth.imageURL)
-                    .resizable()
-                    .cornerRadius(8)
-                    .frame(width: 185, height: 220)
-                VStack {
+            Image(cloth.imageURL)
+                .resizable()
+                .cornerRadius(8)
+                .frame(width: 185, height: 220)
+                .overlay(
                     TopLabel()
-                        .padding([.top, .leading], 5)
+                        .padding(5), alignment: .topLeading)
+                .overlay(
                     FevoriteButton()
-                }
-            }
+                        .padding([.bottom], -15)
+                    , alignment: .bottomTrailing)
             HStack {
                 RatingView(rating: .constant(cloth.rating))
                     .padding([.top, .bottom, .leading], 5)
@@ -162,6 +169,12 @@ struct ItemCell: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        Group {
+            HomeView()
+            //            HomeView()
+            //                .environment(\.colorScheme, .dark)
+            //            HomeView()
+            //                .previewDevice(PreviewDevice(rawValue: "iPad Pro (9.7-inch)"))
+        }
     }
 }

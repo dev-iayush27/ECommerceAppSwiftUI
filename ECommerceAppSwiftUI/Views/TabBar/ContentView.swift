@@ -12,6 +12,7 @@ struct ContentView: View {
     
     init() {
         UITabBar.appearance().backgroundColor = .white
+        UINavigationBar.appearance().barTintColor = .white
     }
     
     @State var selected = 0
@@ -22,41 +23,36 @@ struct ContentView: View {
             HomeView()
                 .tabItem {
                     Image(systemName: "house.fill")
-                        .font(.title)
                     Text("Home")
             }.tag(0)
             
             ShopView()
                 .tabItem {
                     Image(systemName: "cart.fill")
-                        .font(.title)
                     Text("Shop")
             }.tag(1)
             
             BagView()
                 .tabItem {
                     Image(systemName: "bag.fill")
-                        .font(.title)
                     Text("Bag")
             }.tag(2)
             
             FavoriteView()
                 .tabItem {
                     Image(systemName: "heart.fill")
-                        .font(.title)
                     Text("Favorite")
             }.tag(3)
             
             ProfileView()
                 .tabItem {
                     Image(systemName: "person.fill")
-                        .font(.title)
                     Text("Profile")
             }.tag(4)
         }
         .accentColor(Color.init(hex: "DB3022"))
+        .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.top)
-    .navigationBarHidden(true)
     }
 }
 
