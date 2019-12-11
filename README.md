@@ -1,5 +1,4 @@
 # ECommerceAppSwiftUI
-ECommerce App in SwiftUI
 
 For PartialSheet package:
 
