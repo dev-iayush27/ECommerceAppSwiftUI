@@ -85,12 +85,17 @@ struct HomeView: View {
     }
     
     var body: some View {
+        
         NavigationView {
-            ScrollView {
-                VStack {
-                    TopBannerView()
-                    SaleView()
-                    TrendingView()
+            ZStack {
+                Color.init(hex: "f9f9f9")
+                    .edgesIgnoringSafeArea(.all)
+                ScrollView {
+                    VStack {
+                        TopBannerView()
+                        SaleView()
+                        TrendingView()
+                    }
                 }
             }
             .navigationBarTitle(Text("Home"), displayMode: .inline)
@@ -163,7 +168,11 @@ struct ItemCell: View {
                     .font(.headline)
                     .foregroundColor(Color.init(hex: "DB3022"))
             }.padding([.top, .leading], 5)
-        }.frame(width: 185, height: 320)
+        }
+        .frame(width: 185, height: 320)
+        .background(Color.white)
+        .cornerRadius(8)
+        .clipped()
     }
 }
 

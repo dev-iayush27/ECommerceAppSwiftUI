@@ -77,7 +77,7 @@ struct SignupView: View {
     }
     
     fileprivate func SignUpButton() -> some View {
-        return NavigationLink(destination: ContentView(), tag: 1, selection: $selection) {
+        return NavigationLink(destination: TabBarView(), tag: 1, selection: $selection) {
             Button(action: {
                 self.selection = 1
             }) {

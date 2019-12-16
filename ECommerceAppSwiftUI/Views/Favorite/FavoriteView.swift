@@ -1,5 +1,5 @@
 //
-//  ShopView.swift
+//  FavoriteView.swift
 //  ECommerceAppSwiftUI
 //
 //  Created by Ayush Gupta on 26/11/19.
@@ -9,17 +9,16 @@
 import SwiftUI
 import PartialSheet
 
-struct ShopView: View {
-    
-    let arrCloth = Cloth.all()
-    
-    @State private var isModalPresented: Bool = false
-    @State private var sortedBy: String = "Price: lowest to high"
+struct FavoriteView: View {
     
     init() {
-        UITableView.appearance().separatorStyle = .none
         UINavigationBar.appearance().barTintColor = .white
+        UITableView.appearance().separatorStyle = .none
     }
+    
+    let arrFavorite = FavoriteModel.all()
+    @State private var isModalPresented: Bool = false
+    @State private var sortedBy: String = "Price: lowest to high"
     
     var body: some View {
         NavigationView {
@@ -56,14 +55,13 @@ struct ShopView: View {
                     }
                     .padding([.top, .leading, .trailing], 10)
                     
-                    List(self.arrCloth) { cloth in
-                        ItemCellTypeTwo(cloth: cloth)
+                    List(self.arrFavorite) { cloth in
+                        ItemRowForFavorite(cloth: cloth)
                     }
-                    .background(Color.init(hex: "f9f9f9"))
                     .padding(.horizontal, -5)
                 }
             }
-            .navigationBarTitle(Text("Shopping"), displayMode: .inline)
+            .navigationBarTitle(Text("Favorite"), displayMode: .inline)
         }
             
         .partialSheet(presented: $isModalPresented) {
@@ -139,19 +137,25 @@ struct ShopView: View {
     }
 }
 
-struct ShopView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShopView()
-    }
-}
-
-struct ItemCellTypeTwo: View {
+struct ItemRowForFavorite: View {
     
-    let cloth: Cloth
+    let cloth: FavoriteModel
+    
+    fileprivate func AddingToBagButton() -> some View {
+        return Button(action: {}) {
+            Image(systemName: "bag.fill")
+                .foregroundColor(.white)
+                .frame(width: 35, height: 35)
+                .background(Color.init(hex: "DB3022"))
+        }
+        .cornerRadius(20)
+        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
+    }
     
     var body: some View {
         
         ZStack() {
+            
             Rectangle()
                 .foregroundColor(.white)
                 .cornerRadius(5)
@@ -161,7 +165,7 @@ struct ItemCellTypeTwo: View {
                 Image(cloth.imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 130, height: 170)
+                    .frame(width: 130, height: 150)
                     .cornerRadius(5)
                 
                 VStack(alignment: .leading) {
@@ -187,21 +191,20 @@ struct ItemCellTypeTwo: View {
                             .bold()
                             .padding(.top, 5)
                         Spacer()
-                        Button(action: {}) {
-                            Image(systemName: cloth.isFevorite == true ? "heart.fill" : "heart")
-                                .foregroundColor(cloth.isFevorite == true ? .red :.gray)
-                                .frame(width: 40, height: 40)
-                                .background(Color.white)
-                        }
-                        .cornerRadius(20)
-                        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
+                        AddingToBagButton()
                     }
                 }
                 .padding(.init(top: 10, leading: 5, bottom: 5, trailing: 0))
                 Spacer()
             }
-            .frame(height: 170)
+            .frame(height: 150)
             .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
+    }
+}
+
+struct FavoriteView_Previews: PreviewProvider {
+    static var previews: some View {
+        FavoriteView()
     }
 }
