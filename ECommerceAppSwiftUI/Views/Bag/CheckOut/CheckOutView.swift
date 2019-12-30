@@ -26,12 +26,26 @@ struct CheckOutView: View {
         .padding(.vertical, 10)
     }
     
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Text("")
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Checkout")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.init(hex: "f9f9f9"))
+            , alignment: .center)
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Color.init(hex: "f9f9f9")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     ScrollView {
                         VStack(alignment: .leading) {
                             HStack {
@@ -45,7 +59,7 @@ struct CheckOutView: View {
                                         .foregroundColor(.red)
                                 }
                             }
-                            .padding(.top, 10)
+                            .padding(.top, 5)
                             
                             ZStack(alignment: .top) {
                                 Rectangle()
@@ -118,7 +132,9 @@ struct CheckOutView: View {
                     SubmitButton()
                 }
             }
-            .navigationBarTitle(Text("Checkout"), displayMode: .inline)
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

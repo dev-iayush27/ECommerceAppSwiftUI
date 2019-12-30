@@ -13,6 +13,28 @@ struct LogInView: View {
     @State var email : String = ""
     @State var password : String = ""
     @State var isShowForgetPasswordView : Bool = false
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack(alignment: .center) {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.black)
+            }
+            .padding(.leading, 10)
+            .frame(width: 40, height: 40)
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Login")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.init(hex: "f9f9f9"))
+            , alignment: .center)
+    }
     
     fileprivate func EmailTextFiels() -> some View {
         return HStack {
@@ -106,6 +128,7 @@ struct LogInView: View {
                 Color.init(hex: "F9F9F9")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     EmailTextFiels()
                     PasswordTextField()
                     LoginButton()
@@ -120,7 +143,9 @@ struct LogInView: View {
                     }
                 }
             }
-            .navigationBarTitle(Text("Login"), displayMode: .inline)
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

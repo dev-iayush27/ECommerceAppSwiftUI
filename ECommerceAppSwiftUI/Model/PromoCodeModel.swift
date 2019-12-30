@@ -22,11 +22,11 @@ extension PromoCodeModel {
     
     static func all() -> [PromoCodeModel] {
         return [
-            PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Personal Offer", promoCode: "SHOP20", daysRemaining: "5", percentOff: "20%"),
+            PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Festival Offer", promoCode: "SHOP20", daysRemaining: "5", percentOff: "20%"),
             PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Summer Sale", promoCode: "SHOP40", daysRemaining: "2", percentOff: "40%"),
             PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Winter Offer", promoCode: "SHOP10", daysRemaining: "10", percentOff: "10%"),
             PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Black Friday Sale", promoCode: "SHOP30", daysRemaining: "4", percentOff: "30%"),
-            PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Personal Offer", promoCode: "SHOP50", daysRemaining: "9", percentOff: "50%")
+            PromoCodeModel(imageUrl: "promo_banner2", promoCodeTitle: "Christmas Offer", promoCode: "SHOP50", daysRemaining: "9", percentOff: "50%")
         ]
     }
 }

@@ -9,8 +9,36 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.black)
+            }
+            .padding(.leading, 10)
+            .frame(width: 40, height: 40)
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Settings")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.white)
+            , alignment: .center)
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            NavigationBarView()
+            Text("Hello, World!")
+            Spacer()
+        }
     }
 }
 

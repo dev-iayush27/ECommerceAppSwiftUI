@@ -13,8 +13,21 @@ struct SignupView: View {
     @State var name : String = ""
     @State var email : String = ""
     @State var password : String = ""
-    @State var isShowLogin : Bool = false
+    //    @State var isShowLogin : Bool = false
     @State var selection: Int? = nil
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Text("")
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Signup")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.init(hex: "f9f9f9"))
+            , alignment: .center)
+    }
     
     fileprivate func NameTextFiels() -> some View {
         return HStack {
@@ -94,30 +107,31 @@ struct SignupView: View {
         }
     }
     
-    fileprivate func GoToLoginButton() -> some View {
-        return Button(action: {
-            self.isShowLogin.toggle()
-        }) {
-            Text("Already have an account?")
-                .foregroundColor(.gray)
-                .padding()
-        }.sheet(isPresented: $isShowLogin) {
-            LogInView()
-        }
-    }
+    // Present sheet as model
+    //    fileprivate func GoToLoginButton() -> some View {
+    //        return Button(action: {
+    //            self.isShowLogin.toggle()
+    //        }) {
+    //            Text("Already have an account?")
+    //                .foregroundColor(.gray)
+    //                .padding()
+    //        }.sheet(isPresented: $isShowLogin) {
+    //            LogInView()
+    //        }
+    //    }
     
     // Push view
-    //        fileprivate func GoToLoginButton() -> some View {
-    //            return NavigationLink(destination: LogInView(), tag: 2, selection: $selection) {
-    //                Button(action: {
-    //                    self.selection = 2
-    //                }) {
-    //                    Text("Already have an account?")
-    //                        .foregroundColor(.gray)
-    //                        .padding()
-    //                }
-    //            }
-    //        }
+    fileprivate func GoToLoginButton() -> some View {
+        return NavigationLink(destination: LogInView(), tag: 2, selection: $selection) {
+            Button(action: {
+                self.selection = 2
+            }) {
+                Text("Already have an account?")
+                    .foregroundColor(.gray)
+                    .padding()
+            }
+        }
+    }
     
     fileprivate func GoogleLogInButton() -> some View {
         return Button(action: {
@@ -143,6 +157,7 @@ struct SignupView: View {
                 Color.init(hex: "F9F9F9")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     NameTextFiels()
                     EmailTextFiels()
                     PasswordTextField()
@@ -157,7 +172,10 @@ struct SignupView: View {
                         FacebookLogInButton()
                     }
                 }
-            }.navigationBarTitle(Text("Sign up"), displayMode: .inline)
+                .navigationBarTitle(Text(""), displayMode: .inline)
+                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
+            }
         }
     }
 }

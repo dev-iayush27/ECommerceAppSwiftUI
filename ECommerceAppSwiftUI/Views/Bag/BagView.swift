@@ -12,118 +12,179 @@ struct BagView: View {
     
     init() {
         UITableView.appearance().separatorStyle = .none
-        UINavigationBar.appearance().barTintColor = .white
     }
     
     let arrCloth = BagModel.all()
-    let arrPromoCode = PromoCodeModel.all()
-    
-    @State var promoCode: String = ""
-    @State private var isModalPresented: Bool = false
-    
-    fileprivate func PromoCodeView() -> some View {
-        
-        return HStack {
-            
-            TextField("Enter promo code", text: $promoCode)
-                .padding(.leading, 15)
-                .font(.system(size: 15))
-                .frame(height: 50)
-            
-            Spacer()
-            
-            Button(action: {
-                self.isModalPresented = false
-            }) {
-                Text("Apply")
-                    .fontWeight(.medium)
-                    .foregroundColor(Color.init(hex: "ef473a"))
-                    .padding(.trailing, 15)
-            }
-        }
-        .background(Color.white)
-        .cornerRadius(10)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-            
-        .shadow(color: Color.init(hex: "dddddd"), radius: 1, x: 0.8, y: 0.8)
-    }
+    @State var isShowPromoCodeView : Bool = false
+    var discount = 0
+    var deliveryCharges = 0
     
     fileprivate func CheckOutButton() -> some View {
         Button(action: {
             
         }) {
-            Text("Check Out")
-                .fontWeight(.bold)
+            Text("")
+                .font(.custom(Constants.AppFont.boldFont, size: 15))
                 .foregroundColor(.white)
-                .frame(height: 50)
+                .frame(height: 65)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .background(LinearGradient(gradient: Gradient(colors: [Color.init(hex: "cb2d3e"), Color.init(hex: "ef473a")]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(25)
+                .cornerRadius(0)
+        }
+        .padding(.horizontal, 0)
+        .overlay(
+            Text("Checkout")
+                .font(.custom(Constants.AppFont.boldFont, size: 15))
+                .foregroundColor(.white)
+                .padding(.top, -10)
+        )
+    }
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Text("")
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 35)
+        .overlay(
+            Text("My Cart")
+                .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
+                .foregroundColor(Constants.AppColor.primaryBlack)
+                .padding(.horizontal, 10)
+                .background(Color.clear)
+            , alignment: .center)
+    }
+    
+    var line: some View {
+        VStack {
+            Divider()
+        }
+        .padding(.horizontal, 0)
+    }
+    
+    fileprivate func ApplyCoupon() -> some View {
+        return Button(action: {
+            self.isShowPromoCodeView.toggle()
+        }) {
+            HStack {
+                Image("offer")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                    .padding(.leading, 15)
+                    .foregroundColor(Constants.AppColor.primaryBlack)
+                
+                Text("APPLY COUPON")
+                    .font(.custom(Constants.AppFont.regularFont, size: 13))
+                    .foregroundColor(Constants.AppColor.primaryBlack)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 15, height: 15)
+                    .padding(.trailing, 15)
+                    .foregroundColor(.gray)
+            }
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .background(Color.white)
+            //.overlay(RoundedRectangle(cornerRadius: 5)
+            //.stroke(Color.init(hex: "1E90FF"), lineWidth: 0.5))
+            .sheet(isPresented: $isShowPromoCodeView) {
+                PromoCodeView()
         }
     }
     
     var body: some View {
+        
         NavigationView {
-            ZStack {
-                Color.white
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
+            
+            VStack {
+                NavigationBarView()
+                
+                ZStack {
+                    Constants.AppColor.lightGrayColor
+                    
                     ScrollView {
                         ZStack(alignment: .top) {
-                            VStack(alignment: .leading) {
+                            VStack {
+                                
                                 List(self.arrCloth) { cloth in
                                     ItemCellTypeThree(cloth: cloth)
                                 }
-                                    .frame(height: 480) // It should be dynamic...
-                                    .padding(.horizontal, -5)
-                                //PromoCodeView()
-                                Button(action: {
-                                    self.isModalPresented = true
-                                }) {
-                                    Text("Have promo codes?")
-                                }
-                                .padding(.horizontal, 15)
-                                .foregroundColor(Color.init(hex: "ef473a"))
+                                    //.colorMultiply(Color.init(hex: "f9f9f9"))
+                                    .frame(height: 419) // It should be dynamic...
+                                    .padding(.trailing, -5)
+                                    .padding(.bottom, 10)
                                 
-                                HStack {
-                                    Text("Total amount:")
-                                        .font(.headline)
-                                        .foregroundColor(.gray)
+                                ApplyCoupon()
+                                
+                                VStack {
+                                    HStack {
+                                        Text("Item Total")
+                                            .font(.custom(Constants.AppFont.regularFont, size: 13))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                        Spacer()
+                                        Text("₹\(self.arrCloth.reduce(0, { $0 + $1.price }))")
+                                            .font(.custom(Constants.AppFont.boldFont, size: 13))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                    }
+                                    .padding(.top, 25)
+                                    .padding(.horizontal, 15)
+                                    
+                                    HStack {
+                                        Text("Delivery Charges")
+                                            .font(.custom(Constants.AppFont.regularFont, size: 13))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                        Spacer()
+                                        Text("₹\(self.deliveryCharges)")
+                                            .font(.custom(Constants.AppFont.boldFont, size: 13))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                    }
+                                    .padding(.top, 10)
+                                    .padding(.horizontal, 15)
+                                    
+                                    HStack {
+                                        Text("Discount")
+                                            .font(.custom(Constants.AppFont.regularFont, size: 13))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                        Spacer()
+                                        Text("- ₹\(self.arrCloth.reduce(0, { $0 + ($1.price * $1.discount)/100}))")
+                                            .font(.custom(Constants.AppFont.boldFont, size: 13))
+                                            .foregroundColor(Color.init(hex: "036440"))
+                                    }
+                                    .padding(.top, 10)
+                                    .padding(.horizontal, 15)
+                                    
+                                    line.padding(10)
+                                    
+                                    HStack {
+                                        Text("Total Amount")
+                                            .font(.custom(Constants.AppFont.boldFont, size: 16))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                        Spacer()
+                                            Text("₹\(self.arrCloth.reduce(0, { $0 + ($1.price - ($1.price * $1.discount)/100)}))")
+                                            .font(.custom(Constants.AppFont.boldFont, size: 16))
+                                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                                    }
+                                    .padding(.horizontal, 15)
+                                    .padding(.bottom, 10)
+                                    
                                     Spacer()
-                                    Text("$199")
-                                        .font(.title)
-                                        .foregroundColor(Color.black)
-                                        .bold()
-                                }
-                                .padding(.top, 20)
-                                .padding(.horizontal, 15)
-                                Spacer()
+                                }.background(Color.white)
+                                    .padding(.top, 10)
                             }
                         }
-                    }
+                    }.padding(.top, 5)
                     Spacer()
-                    CheckOutButton()
-                        .padding([.horizontal, .bottom], 15)
                 }
-            }
-            .navigationBarTitle(Text("Bag"), displayMode: .inline)
-        }
-            
-        .partialSheet(presented: $isModalPresented) {
-            ZStack {
-                Color.init(hex: "f9f9f9")
-                    .edgesIgnoringSafeArea(.all)
-                VStack(alignment: .leading) {
-                    self.PromoCodeView()
-                    Text("Promo Codes")
-                        .padding(.horizontal, 15)
-                        .font(.headline)
-                    List(self.arrPromoCode) { promoCode in
-                        PromoCodeRow(promoCode: promoCode)
-                    }
-                }
-            }.frame(height: 400)
+                CheckOutButton()
+            }.edgesIgnoringSafeArea(.bottom)
+                
+                .navigationBarTitle(Text(""), displayMode: .inline)
+                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -131,71 +192,6 @@ struct BagView: View {
 struct BagView_Previews: PreviewProvider {
     static var previews: some View {
         BagView()
-    }
-}
-
-struct PromoCodeRow: View {
-    
-    let promoCode: PromoCodeModel
-    
-    fileprivate func ApplyButton() -> some View {
-        Button(action: {
-            
-        }) {
-            Text("Apply")
-                .font(.caption)
-                .fontWeight(.medium)
-                .foregroundColor(.white)
-                .frame(height: 30)
-                .padding(.horizontal, 15)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.init(hex: "cb2d3e"), Color.init(hex: "ef473a")]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(15)
-        }
-    }
-    
-    var body: some View {
-        
-        ZStack() {
-            Rectangle()
-                .foregroundColor(.white)
-                .cornerRadius(5)
-                .shadow(color: Color.init(hex: "dddddd"), radius: 1, x: 0.8, y: 0.8)
-            
-            HStack(alignment: .center) {
-                Image(promoCode.imageUrl)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 72)
-                    .padding(.vertical, 0)
-                    .overlay(
-                        Text(promoCode.percentOff)
-                            .foregroundColor(.white)
-                            .font(.body)
-                            .bold()
-                        , alignment: .center)
-                VStack(alignment: .leading) {
-                        Text(promoCode.promoCodeTitle)
-                            .font(.body)
-                            .bold()
-                            .lineLimit(nil)
-                            .padding(.bottom, 5)
-                        Text(promoCode.promoCode)
-                            .font(.footnote)
-                }
-                .padding(.init(top: 5, leading: 5, bottom: 5, trailing: 0))
-                Spacer()
-                VStack(alignment: .trailing) {
-                    ApplyButton()
-                        .padding(.bottom, 5)
-                    Text("Valid for \(promoCode.daysRemaining) days")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-                .padding(.trailing, 10)
-            }
-            .frame(height: 80)
-            .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-        }
     }
 }
 
@@ -207,87 +203,110 @@ struct ItemCellTypeThree: View {
         return Button(action: {}) {
             Image(systemName: "plus")
                 .foregroundColor(.gray)
-                .frame(width: 30, height: 30)
-                .background(Color.white)
+                .frame(width: 25, height: 25)
+            //.background(Constants.AppColor.secondaryRed)
         }
-        .clipShape(Circle())
-        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
+        //        .clipShape(Circle())
+        //        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
     }
     
     fileprivate func minusButton() -> some View {
         return Button(action: {}) {
             Image(systemName: "minus")
                 .foregroundColor(.gray)
-                .frame(width: 30, height: 30)
-                .background(Color.white)
+                .frame(width: 25, height: 25)
+            //.background(Constants.AppColor.secondaryRed)
         }
-        .clipShape(Circle())
-        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
+        //        .clipShape(Circle())
+        //        .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
+    }
+    
+    var line: some View {
+        VStack {
+            Divider()
+        }
+        .padding(.horizontal, 0)
     }
     
     var body: some View {
         
         ZStack() {
-            Rectangle()
-                .foregroundColor(.white)
-                .cornerRadius(5)
-                .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
-            
+            //            Rectangle()
+            //                .foregroundColor(.white)
+            //                .cornerRadius(5)
+            //                .shadow(color: Color.init(hex: "dddddd"), radius: 2, x: 0.8, y: 0.8)
             HStack(alignment: .top) {
                 Image(cloth.imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 120, height: 140)
-                    .cornerRadius(5)
-                
+                    .frame(width: 90, height: 120)
+                    .cornerRadius(1)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
-                        Text(cloth.name)
-                            .font(.headline)
-                            .lineLimit(nil)
+                        Text(cloth.company)
+                            .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
+                            .foregroundColor(Constants.AppColor.secondaryBlack)
+                            .lineLimit(1)
                         Spacer()
                         Button(action: {
                             
                         }) {
-                            Image("menu")
+                            Image(systemName: "trash")
                                 .foregroundColor(Color.init(hex: "bbbbbb"))
+                                .padding(.top, 5)
                         }
                     }
+                    
+                    Text(cloth.name)
+                        .font(.custom(Constants.AppFont.regularFont, size: 11))
+                        .foregroundColor(Constants.AppColor.secondaryBlack)
+                        .padding(.top, -5)
+                    
                     HStack {
                         Text("Color:")
-                            .font(.footnote)
+                            .font(.custom(Constants.AppFont.regularFont, size: 13))
                             .foregroundColor(.gray)
                         Text(cloth.color)
-                            .font(.footnote)
-                            .foregroundColor(.black)
+                            .font(.custom(Constants.AppFont.regularFont, size: 13))
+                            .foregroundColor(Constants.AppColor.secondaryBlack)
                         
                         Text("Size:")
-                            .font(.footnote)
+                            .font(.custom(Constants.AppFont.regularFont, size: 13))
                             .foregroundColor(.gray)
                         Text(cloth.size)
-                            .font(.footnote)
-                            .foregroundColor(.black)
+                            .font(.custom(Constants.AppFont.regularFont, size: 13))
+                            .foregroundColor(Constants.AppColor.secondaryBlack)
                     }
+                    .padding(.top, 10)
                     
                     Spacer()
                     HStack {
-                        minusButton()
-                        Text("1")
-                            .padding(.horizontal, 5)
-                        plusButton()
+                        HStack {
+                            minusButton()
+                            Text("1")
+                                .font(.custom(Constants.AppFont.semiBoldFont, size: 13))
+                                .foregroundColor(Constants.AppColor.secondaryBlack)
+                                .padding(.horizontal, 5)
+                            plusButton()
+                        }
+                        .background(Constants.AppColor.lightGrayColor)
+                        .cornerRadius(5)
+                        .padding(.bottom, 10)
                         Spacer()
-                        Text("$\(cloth.price)")
-                            .font(.headline)
-                            .foregroundColor(Color.black)
-                            .bold()
+                        Text("₹\(cloth.price - (cloth.price * cloth.discount)/100)")
+                            .font(.custom(Constants.AppFont.semiBoldFont, size: 14))
+                            .foregroundColor(Constants.AppColor.primaryBlack)
                     }
-                    .padding(.bottom, 10)
+                    
                 }
-                .padding(.init(top: 12, leading: 5, bottom: 5, trailing: 0))
+                .padding(.init(top: 5, leading: 5, bottom: 5, trailing: 0))
                 Spacer()
             }
-            .frame(height: 140)
-            .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .overlay(
+                line
+                    .padding(.top, 10), alignment: .bottom)
+                .frame(height: 130)
+                .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
     }
 }

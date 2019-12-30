@@ -11,12 +11,33 @@ import SwiftUI
 struct MyOrdersView: View {
     
     init() {
-        UINavigationBar.appearance().barTintColor = .white
         UITableView.appearance().separatorStyle = .none
     }
     
     let arrOrder = OrderModel.all()
     @State private var selectorIndex = 0
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.black)
+            }
+            .padding(.leading, 10)
+            .frame(width: 40, height: 40)
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("My Orders")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.white)
+            , alignment: .center)
+    }
     
     var body: some View {
         
@@ -25,13 +46,14 @@ struct MyOrdersView: View {
                 Color.white
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     Picker("", selection: $selectorIndex) {
                         Text("Delivered").tag(0)
                         Text("Processing").tag(1)
                         Text("Cancelled").tag(2)
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .padding([.horizontal, .top], 10)
+                    .padding([.horizontal, .vertical], 10)
                     
                     if selectorIndex == 0 {
                         List(self.arrOrder.filter { $0.status == "Delivered" }) { order in
@@ -48,7 +70,9 @@ struct MyOrdersView: View {
                     }
                 }
             }
-            .navigationBarTitle(Text("My Orders"), displayMode: .inline)
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -59,7 +83,11 @@ struct OrderRow: View {
     var selectorIndex = 0
     
     var line: some View {
-        VStack { Divider().background(Color.init(hex: "F9F9F9")) }.padding(.horizontal, 0)
+        VStack {
+            Divider()
+                .background(Color.init(hex: "F9F9F9"))
+        }
+        .padding(.horizontal, 0)
     }
     
     var body: some View {

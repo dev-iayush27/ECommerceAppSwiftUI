@@ -15,10 +15,24 @@ struct ShopView: View {
     
     @State private var isModalPresented: Bool = false
     @State private var sortedBy: String = "Price: lowest to high"
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     init() {
         UITableView.appearance().separatorStyle = .none
-        UINavigationBar.appearance().barTintColor = .white
+        //UINavigationBar.appearance().barTintColor = .white
+    }
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Text("")
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Shopping")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.init(hex: "f9f9f9"))
+            , alignment: .center)
     }
     
     var body: some View {
@@ -27,6 +41,7 @@ struct ShopView: View {
                 Color.init(hex: "f9f9f9")
                     .edgesIgnoringSafeArea(.all)
                 VStack(alignment: .leading) {
+                    NavigationBarView()
                     HStack {
                         Button(action: {
                             self.isModalPresented = true
@@ -54,7 +69,7 @@ struct ShopView: View {
                         .foregroundColor(.black)
                         .font(.body)
                     }
-                    .padding([.top, .leading, .trailing], 10)
+                    .padding(.init(top: 15, leading: 10, bottom: 0, trailing: 10))
                     
                     List(self.arrCloth) { cloth in
                         ItemCellTypeTwo(cloth: cloth)
@@ -63,7 +78,9 @@ struct ShopView: View {
                     .padding(.horizontal, -5)
                 }
             }
-            .navigationBarTitle(Text("Shopping"), displayMode: .inline)
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
             
         .partialSheet(presented: $isModalPresented) {
@@ -188,8 +205,8 @@ struct ItemCellTypeTwo: View {
                             .padding(.top, 5)
                         Spacer()
                         Button(action: {}) {
-                            Image(systemName: cloth.isFevorite == true ? "heart.fill" : "heart")
-                                .foregroundColor(cloth.isFevorite == true ? .red :.gray)
+                            Image(systemName: cloth.isFavorite == true ? "heart.fill" : "heart")
+                                .foregroundColor(cloth.isFavorite == true ? .red :.gray)
                                 .frame(width: 40, height: 40)
                                 .background(Color.white)
                         }

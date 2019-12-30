@@ -11,6 +11,28 @@ import SwiftUI
 struct ForgetPasswordView: View {
     
     @State var email : String = ""
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack(alignment: .center) {
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.black)
+            }
+            .padding(.leading, 10)
+            .frame(width: 40, height: 40)
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 45)
+        .overlay(
+            Text("Forget Password")
+                .font(.headline)
+                .padding(.horizontal, 10)
+                .background(Color.init(hex: "f9f9f9"))
+            , alignment: .center)
+    }
     
     fileprivate func EmailTextFiels() -> some View {
         return HStack {
@@ -54,6 +76,7 @@ struct ForgetPasswordView: View {
                 Color.init(hex: "F9F9F9")
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     Text("Please, enter your email address. You will receive a link to create a new password via email.")
                         .foregroundColor(.gray)
                         .padding([.trailing, .leading], 20)
@@ -64,7 +87,9 @@ struct ForgetPasswordView: View {
                     Spacer()
                 }
             }
-            .navigationBarTitle(Text("Forget Password"), displayMode: .inline)
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

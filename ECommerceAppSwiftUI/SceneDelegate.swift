@@ -20,6 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         // Use a UIHostingController as window root view controller.
+        
+//        let detail = ItemDetailsView(cloth: Cloth(name: "Women Printed Flare Dress", description: "Green printed woven fit and flare dress, has a notched lapel collar and sleevesless.", imageURL: "greenDress", price: 2149, company: "Chemistry Edition", rating: 4, type: "sale", isFavorite: false, color: "Green", size: "L", discount: 40))
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: TabBarView())
@@ -59,3 +62,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 }
 
+final class HostingController<T: View>: UIHostingController<T> {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+}

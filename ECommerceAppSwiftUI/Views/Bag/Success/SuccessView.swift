@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct SuccessView: View {
+    
     var body: some View {
         VStack(alignment: .center) {
             Image("success")

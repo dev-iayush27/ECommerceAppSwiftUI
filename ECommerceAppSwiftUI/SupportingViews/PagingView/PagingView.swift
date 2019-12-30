@@ -52,6 +52,22 @@ struct PagingView<Content>: View where Content: View {
             }
             .clipped()
             
+//            VStack {
+//                // StrokeText(text: "40-60% Off On Winter Sale", width: 0.5, color: .red)
+//                Text("40-60% Off On Winter Sale")
+//                    .foregroundColor(.white)
+//                    .font(.custom(Constants.AppFont.extraBoldFont, size: 18))
+//                    .padding(.top, 5)
+//                Text("Terms & conditions apply*")
+//                    .padding(.top, -3)
+//                    .foregroundColor(.white)
+//                    .font(.custom(Constants.AppFont.semiBoldFont, size: 10))
+//                    .padding(.bottom, 8)
+//            }
+//            .padding(.bottom, 15)
+//            .frame(width: UIScreen.main.bounds.width)
+//            .background(Color.black.opacity(0.35))
+            
             PageControl(index: $index, maxIndex: maxIndex)
         }
     }
@@ -80,11 +96,11 @@ struct PageControl: View {
     var body: some View {
         HStack(spacing: 8) {
             ForEach(0...maxIndex, id: \.self) { index in
-                Circle()
-                    .fill(index == self.index ? Color.white : Color.gray)
-                    .frame(width: 8, height: 8)
+                RoundedRectangle(cornerRadius: 1.5)
+                    .fill(index == self.index ? Constants.AppColor.secondaryRed : Color.white)
+                    .frame(width: 10, height: 3)
             }
         }
-        .padding(15)
+        .padding(10)
     }
 }
