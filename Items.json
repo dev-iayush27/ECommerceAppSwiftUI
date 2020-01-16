@@ -1,0 +1,48 @@
+[ 
+  {
+    "name" : "Printed Long Top",
+    "imageUrl": "redDress",
+    "description" : "Red floral print long top, has a round collar, full sleeves and available in different sizes for women.",
+    "price" : 2399,
+    "companyName" : "Rain & Rainbow",
+    "rating" : 4,
+    "type" : "sale",
+    "isFavorite" : true,
+    "color" : [
+      "red",
+      "blue",
+      "green"
+    ],
+    "size" : [
+      "S", 
+      "M", 
+      "L", 
+      "XL", 
+      "XXL"
+    ],
+    "discount" : 40
+  },
+  {
+    "name" : "Printed Long Top",
+    "imageUrl": "redDress",
+    "description" : "Red floral print long top, has a round collar, full sleeves and available in different sizes for women.",
+    "price" : 1999,
+    "companyName" : "Rain & Rainbow",
+    "rating" : 4,
+    "type" : "sale",
+    "isFavorite" : true,
+    "color" : [
+      "red",
+      "blue",
+      "green"
+    ],
+    "size" : [
+      "S", 
+      "M", 
+      "L", 
+      "XL", 
+      "XXL"
+    ],
+    "discount" : 40
+  }
+]
