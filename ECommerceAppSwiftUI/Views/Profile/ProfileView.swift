@@ -47,10 +47,10 @@ struct ProfileView: View {
                             .clipShape(Circle())
                             .padding(.leading, 15)
                         VStack(alignment: .leading) {
-                            Text("Ayush Gupta")
+                            Text("Your Name")
                                 .font(.headline)
                                 .bold()
-                            Text("guptaayush374@gmail.com")
+                            Text("youremail@gmail.com")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }.padding(.horizontal, 5)
@@ -58,7 +58,7 @@ struct ProfileView: View {
                     }.padding(.vertical, 10)
                     
                     List(self.arrProfile) { profile in
-                        NavigationLink(destination: FavoriteView()) {
+//                        NavigationLink(destination: FavoriteView()) {
                             VStack(alignment: .leading) {
                                 Text(profile.title)
                                     .font(.subheadline)
@@ -67,7 +67,7 @@ struct ProfileView: View {
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }.padding([.horizontal, .vertical], 10)
-                        }
+//                        }
                     }
                     .colorMultiply(Color.init(hex: "f9f9f9"))
                     .padding(.leading, -5)

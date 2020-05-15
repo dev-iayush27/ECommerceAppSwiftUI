@@ -53,7 +53,8 @@ struct TabBarView: View {
         .navigationBarTitle("")
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-        .edgesIgnoringSafeArea(.top)
+//        .edgesIgnoringSafeArea(.top)
+//        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
@@ -124,3 +125,9 @@ struct TabBarView: View {
 //        }.padding(.horizontal)
 //    }
 //}
+
+struct TabBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
