@@ -18,7 +18,7 @@ struct ForgetPasswordView: View {
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
-                Image(systemName: "arrow.left")
+                Image(systemName: "xmark")
                     .foregroundColor(.black)
             }
             .padding(.leading, 10)
