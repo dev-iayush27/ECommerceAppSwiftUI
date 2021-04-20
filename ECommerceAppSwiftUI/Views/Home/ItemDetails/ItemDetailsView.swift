@@ -100,7 +100,7 @@ struct ItemDetailsView: View {
             ScrollView(.horizontal, showsIndicators: false, content: {
                 HStack(spacing: 10) {
                     ForEach(self.arrCloth) { cloth in
-                        ItemCell(cloth: cloth)
+                        ItemRow(cloth: cloth)
                     }
                 }.padding(.leading, 15)
             })
