@@ -1,5 +1,4 @@
 # ECommerceAppSwiftUI
-# Ecommerce with Swift
 
 <h2>Screenshots</h2>
 <center>
