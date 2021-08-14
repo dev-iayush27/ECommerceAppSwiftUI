@@ -9,7 +9,6 @@
 import Foundation
 
 struct BagModel: Identifiable {
-    
     let id = UUID()
     let name: String
     let description: String
@@ -25,7 +24,6 @@ struct BagModel: Identifiable {
 }
 
 extension BagModel {
-    
     static func all() -> [BagModel] {
         return [
             BagModel(name: "Printed Long Top", description: "Red floral print long top, has a round collar, full sleeves and available in different sizes for women.", imageURL: "redDress", price: 2399, company: "Rain & Rainbow", rating: 4, type: "sale", isFavorite: false, color: "Red", size: "S", discount: 40),

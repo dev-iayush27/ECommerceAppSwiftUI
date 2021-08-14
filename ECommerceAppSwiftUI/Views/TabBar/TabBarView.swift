@@ -32,14 +32,22 @@ struct TabBarView: View {
                         Image(systemName: "heart.fill")
                         Text("Favorite")
                     }.tag(2)
+                BagView()
+                    .tabItem {
+                        Image(systemName: "bag.fill")
+                        Text("Cart")
+                    }.tag(3)
                 ProfileView()
                     .tabItem {
-                        Image(systemName: "person.fill")
-                        Text("Profile")
-                    }.tag(3)
+                        Image(systemName: "ellipsis.circle.fill")
+                        Text("More")
+                    }.tag(4)
             }
         }
         .accentColor(Color.init(hex: "DB3022"))
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

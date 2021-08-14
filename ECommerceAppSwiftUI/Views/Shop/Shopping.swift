@@ -10,14 +10,6 @@ import SwiftUI
 
 struct Shopping: View {
     
-    init() {
-        UITableView.appearance().separatorStyle = .none
-        
-        UISegmentedControl.appearance().selectedSegmentTintColor = .white
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.init(hexString: "1f1f1f")], for: .selected)
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
-    }
-    
     @State private var selectorIndex = 0
     
     let arrCategory = CategoryModel.all()
@@ -67,17 +59,32 @@ struct Shopping: View {
                 .cornerRadius(10)
                 
                 if selectorIndex == 0 {
-                    List(self.arrCategory) { category in
-                        CategoryRow(category: category, selectorIndex: self.selectorIndex)
-                    }
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        VStack(spacing: 10) {
+                            ForEach(self.arrCategory, id: \.id) { category in
+                                CategoryRow(category: category, selectorIndex: self.selectorIndex)
+                            }
+                        }
+                        .padding(.horizontal, 15)
+                    })
                 } else if selectorIndex == 1 {
-                    List(self.arrCategory) { category in
-                        CategoryRow(category: category, selectorIndex: self.selectorIndex)
-                    }
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        VStack(spacing: 10) {
+                            ForEach(self.arrCategory, id: \.id) { category in
+                                CategoryRow(category: category, selectorIndex: self.selectorIndex)
+                            }
+                        }
+                        .padding(.horizontal, 15)
+                    })
                 } else {
-                    List(self.arrCategory) { category in
-                        CategoryRow(category: category, selectorIndex: self.selectorIndex)
-                    }
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        VStack(spacing: 10) {
+                            ForEach(self.arrCategory, id: \.id) { category in
+                                CategoryRow(category: category, selectorIndex: self.selectorIndex)
+                            }
+                        }
+                        .padding(.horizontal, 15)
+                    })
                 }
                 
                 Spacer()
@@ -94,14 +101,6 @@ struct CategoryRow: View {
     
     var category: CategoryModel
     var selectorIndex = 0
-    
-    var line: some View {
-        VStack {
-            Divider()
-                .background(Constants.AppColor.lightGrayColor)
-        }
-        .padding(.horizontal, 0)
-    }
     
     var body: some View {
         

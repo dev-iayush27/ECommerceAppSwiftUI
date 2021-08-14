@@ -10,29 +10,16 @@ import SwiftUI
 
 struct PromoCodeView: View {
     
-    init() {
-        UITableView.appearance().separatorStyle = .none
-        //UINavigationBar.appearance().barTintColor = .white
-    }
-    
     let arrPromoCode = PromoCodeModel.all()
     @State var promoCode: String = ""
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     fileprivate func NavigationBarView() -> some View {
         return HStack {
-            Button(action: {
-                
-            }) {
-                Image(systemName: "chevron.down")
-                .foregroundColor(Constants.AppColor.primaryBlack)
-                    .padding(.leading, 16)
-            }
-            Spacer()
+            Text("")
         }
         .frame(width: UIScreen.main.bounds.width, height: 35)
         .overlay(
-            Text("Promo Codes")
+            Text("PROMO CODES")
                 .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .foregroundColor(Constants.AppColor.primaryBlack)
                 .padding(.horizontal, 10)
@@ -58,25 +45,23 @@ struct PromoCodeView: View {
         }
         .background(Color.white)
         .cornerRadius(10)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 10)
+        .padding(.horizontal, 15)
+        .padding(.vertical, 5)
         .shadow(color: Constants.AppColor.shadowColor, radius: 1, x: 0.8, y: 0.8)
     }
     
     var body: some View {
-        ZStack {
-            Constants.AppColor.lightGrayColor
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                NavigationBarView()
-                VStack(alignment: .leading) {
-                    self.PromoCodeView()
-                    List(self.arrPromoCode) { promoCode in
+        VStack(alignment: .leading) {
+            NavigationBarView()
+            self.PromoCodeView()
+            ScrollView(.vertical, showsIndicators: false, content: {
+                VStack(spacing: 10) {
+                    ForEach(self.arrPromoCode, id: \.id) { promoCode in
                         PromoCodeRow(promoCode: promoCode)
                     }
-                    .padding(.horizontal, -5)
                 }
-            }
+                .padding(.horizontal, 15)
+            })
         }
     }
 }

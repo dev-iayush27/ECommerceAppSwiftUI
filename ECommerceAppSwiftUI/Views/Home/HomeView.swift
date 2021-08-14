@@ -10,14 +10,35 @@ import SwiftUI
 
 struct HomeView: View {
     
-    init() {
-        //UINavigationBar.appearance().barTintColor = .white
-    }
-    
     @State var index = 0
     var arrImage = ["collage", "collage", "collage", "collage"]
     let arrCloth = Cloth.all()
     @State private var selection: Int? = nil
+    @State var show = false
+    
+    fileprivate func NavigationBarView() -> some View {
+        return HStack {
+            Spacer()
+            //            NavigationLink(destination: BagView(show: self.$show), isActive: self.$show) {
+            Button(action: {
+                self.show.toggle()
+                print("Tapped on notification")
+            }) {
+                Image(systemName: "bell")
+            }
+            .frame(height: 30)
+            .foregroundColor(Constants.AppColor.secondaryBlack)
+            //            }
+        }
+        .padding(.horizontal, 15)
+        .frame(width: UIScreen.main.bounds.width, height: 35)
+        .overlay(
+            Text("HOME")
+                .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
+                .foregroundColor(Constants.AppColor.primaryBlack)
+                .padding(.horizontal, 10)
+            , alignment: .center)
+    }
     
     fileprivate func ImageSlider() -> some View {
         return PagingView(index: $index.animation(), maxIndex: self.arrImage.count - 1) {
@@ -101,9 +122,8 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Constants.AppColor.lightGrayColor
-                    .edgesIgnoringSafeArea(.all)
                 VStack {
+                    NavigationBarView()
                     ScrollView {
                         VStack {
                             ImageSlider()
@@ -113,31 +133,9 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationBarTitle("Home", displayMode: .inline)
-            .navigationBarItems(
-                leading:
-                    NavigationLink(destination: Text("Test"), tag: 1, selection: $selection) {
-                        Button(action: {
-                            //                            self.selection = 1
-                            print("Tapped on notification")
-                        }) {
-                            Image(systemName: "bell")
-                        }
-                        .frame(height: 30)
-                        .foregroundColor(Constants.AppColor.secondaryBlack)
-                    },
-                trailing:
-                    NavigationLink(destination: BagView(), tag: 2, selection: $selection) {
-                        Button(action: {
-                            self.selection = 2
-                            print("Tapped on bag")
-                        }) {
-                            Image(systemName: "bag")
-                        }
-                        .frame(height: 30)
-                        .foregroundColor(Constants.AppColor.secondaryBlack)
-                    }
-            )
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
