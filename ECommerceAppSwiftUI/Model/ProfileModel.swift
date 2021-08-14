@@ -21,7 +21,7 @@ extension ProfileModel {
         return [
             ProfileModel(title: "My Orders", subtitle: "Already have 2 orders"),
             ProfileModel(title: "Shipping Addresses", subtitle: "3 addresses"),
-            ProfileModel(title: "Payment Methods", subtitle: "Visa **34"),
+            ProfileModel(title: "Payment Methods", subtitle: "Visa **3421"),
             ProfileModel(title: "Promo Codes", subtitle: "You have special promo codes"),
             ProfileModel(title: "My Reviews", subtitle: "Reviews for 4 items"),
             ProfileModel(title: "Settings", subtitle: "Notification, Passwords")
