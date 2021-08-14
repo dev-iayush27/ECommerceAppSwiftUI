@@ -89,10 +89,10 @@ struct BagView: View {
         }
         .frame(width: UIScreen.main.bounds.width, height: 45)
         .background(Color.white)
-            //.overlay(RoundedRectangle(cornerRadius: 5)
-            //.stroke(Color.init(hex: "1E90FF"), lineWidth: 0.5))
-            .sheet(isPresented: $isShowPromoCodeView) {
-                PromoCodeView()
+        //.overlay(RoundedRectangle(cornerRadius: 5)
+        //.stroke(Color.init(hex: "1E90FF"), lineWidth: 0.5))
+        .sheet(isPresented: $isShowPromoCodeView) {
+            PromoCodeView()
         }
     }
     
@@ -113,10 +113,10 @@ struct BagView: View {
                                 List(self.arrCloth) { cloth in
                                     ItemCellTypeThree(cloth: cloth)
                                 }
-                                    //.colorMultiply(Color.init(hex: "f9f9f9"))
-                                    .frame(height: 419) // It should be dynamic...
-                                    .padding(.trailing, -5)
-                                    .padding(.bottom, 10)
+                                //.colorMultiply(Color.init(hex: "f9f9f9"))
+                                .frame(height: 419) // It should be dynamic...
+                                .padding(.trailing, -5)
+                                .padding(.bottom, 10)
                                 
                                 ApplyCoupon()
                                 
@@ -164,7 +164,7 @@ struct BagView: View {
                                             .font(.custom(Constants.AppFont.boldFont, size: 16))
                                             .foregroundColor(Constants.AppColor.secondaryBlack)
                                         Spacer()
-                                            Text("₹\(self.arrCloth.reduce(0, { $0 + ($1.price - ($1.price * $1.discount)/100)}))")
+                                        Text("₹\(self.arrCloth.reduce(0, { $0 + ($1.price - ($1.price * $1.discount)/100)}))")
                                             .font(.custom(Constants.AppFont.boldFont, size: 16))
                                             .foregroundColor(Constants.AppColor.secondaryBlack)
                                     }
@@ -173,18 +173,15 @@ struct BagView: View {
                                     
                                     Spacer()
                                 }.background(Color.white)
-                                    .padding(.top, 10)
+                                .padding(.top, 10)
                             }
                         }
                     }.padding(.top, 5)
                     Spacer()
                 }
                 CheckOutButton()
-            }.edgesIgnoringSafeArea(.bottom)
-                
-                .navigationBarTitle(Text(""), displayMode: .inline)
-                .navigationBarHidden(true)
-                .navigationBarBackButtonHidden(true)
+            }
+            .navigationBarTitle("Cart", displayMode: .inline)
         }
     }
 }
@@ -305,8 +302,8 @@ struct ItemCellTypeThree: View {
             .overlay(
                 line
                     .padding(.top, 10), alignment: .bottom)
-                .frame(height: 130)
-                .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .frame(height: 130)
+            .padding(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
     }
 }

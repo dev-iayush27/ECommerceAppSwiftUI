@@ -40,9 +40,6 @@ struct TabBarView: View {
             }
         }
         .accentColor(Color.init(hex: "DB3022"))
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

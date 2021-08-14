@@ -17,27 +17,7 @@ struct HomeView: View {
     @State var index = 0
     var arrImage = ["collage", "collage", "collage", "collage"]
     let arrCloth = Cloth.all()
-    
-    fileprivate func NavigationBarView() -> some View {
-        return HStack {
-            Image(systemName: "bell")
-                .foregroundColor(Constants.AppColor.secondaryBlack)
-                .frame(height: 30)
-                .padding(.leading, 15)
-            Spacer()
-            Image(systemName: "bag")
-                .foregroundColor(Constants.AppColor.secondaryBlack)
-                .frame(height: 30)
-                .padding(.trailing, 15)
-        }
-        .frame(width: UIScreen.main.bounds.width, height: 35)
-        .overlay(
-            Text("Home")
-                .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
-                .foregroundColor(Constants.AppColor.primaryBlack)
-                .padding(.horizontal, 10)
-            , alignment: .center)
-    }
+    @State private var selection: Int? = nil
     
     fileprivate func ImageSlider() -> some View {
         return PagingView(index: $index.animation(), maxIndex: self.arrImage.count - 1) {
@@ -50,23 +30,6 @@ struct HomeView: View {
         }
         .aspectRatio(contentMode: .fill)
         .frame(width: UIScreen.main.bounds.width, height: 210)
-    }
-    
-    fileprivate func TopBannerView() -> some View {
-        return Image("collage").renderingMode(.original)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: UIScreen.main.bounds.width, height: 180)
-            .overlay(
-                VStack(alignment: .center) {
-                    Text("Men's Casual Wear")
-                        .font(.custom(Constants.AppFont.regularFont, size: 22))
-                        .foregroundColor(.white)
-                    Text("40-80% OFF")
-                        .font(.custom(Constants.AppFont.extraBoldFont, size: 18))
-                        .foregroundColor(.white)
-                }.padding(.bottom, 20)
-                , alignment: .bottom)
     }
     
     fileprivate func SaleView() -> some View {
@@ -136,26 +99,45 @@ struct HomeView: View {
     }
     
     var body: some View {
-        
         NavigationView {
             ZStack {
                 Constants.AppColor.lightGrayColor
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    NavigationBarView()
                     ScrollView {
                         VStack {
                             ImageSlider()
-                            //TopBannerView()
                             SaleView()
                             TrendingView()
                         }
-                    }.edgesIgnoringSafeArea(.top)
+                    }
                 }
             }
-            .navigationBarTitle(Text(""), displayMode: .inline)
-            .navigationBarHidden(true)
-            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("Home", displayMode: .inline)
+            .navigationBarItems(
+                leading:
+                    NavigationLink(destination: Text("Test"), tag: 1, selection: $selection) {
+                        Button(action: {
+                            //                            self.selection = 1
+                            print("Tapped on notification")
+                        }) {
+                            Image(systemName: "bell")
+                        }
+                        .frame(height: 30)
+                        .foregroundColor(Constants.AppColor.secondaryBlack)
+                    },
+                trailing:
+                    NavigationLink(destination: BagView(), tag: 2, selection: $selection) {
+                        Button(action: {
+                            self.selection = 2
+                            print("Tapped on bag")
+                        }) {
+                            Image(systemName: "bag")
+                        }
+                        .frame(height: 30)
+                        .foregroundColor(Constants.AppColor.secondaryBlack)
+                    }
+            )
         }
     }
 }
