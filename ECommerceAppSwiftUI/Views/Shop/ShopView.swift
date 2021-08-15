@@ -17,11 +17,6 @@ struct ShopView: View {
     @State private var sortedBy: String = "Price: lowest to high"
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    init() {
-        UITableView.appearance().separatorStyle = .none
-        //UINavigationBar.appearance().barTintColor = .white
-    }
-    
     fileprivate func NavigationBarView() -> some View {
         return HStack {
             Text("")

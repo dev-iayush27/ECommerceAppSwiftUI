@@ -33,7 +33,7 @@ struct HomeView: View {
         .padding(.horizontal, 15)
         .frame(width: UIScreen.main.bounds.width, height: 35)
         .overlay(
-            Text("HOME")
+            Text("Home")
                 .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .foregroundColor(Constants.AppColor.primaryBlack)
                 .padding(.horizontal, 10)
@@ -58,7 +58,7 @@ struct HomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Sale")
-                        .font(.custom(Constants.AppFont.boldFont, size: 22))
+                        .font(.custom(Constants.AppFont.boldFont, size: 18))
                         .foregroundColor(Constants.AppColor.secondaryBlack)
                         .padding(.bottom, -1)
                     Text("Festive Season Sale")
@@ -91,7 +91,7 @@ struct HomeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Trending")
-                        .font(.custom(Constants.AppFont.boldFont, size: 22))
+                        .font(.custom(Constants.AppFont.boldFont, size: 18))
                         .foregroundColor(Constants.AppColor.secondaryBlack)
                         .padding(.bottom, -1)
                     Text("You have never seen it before")

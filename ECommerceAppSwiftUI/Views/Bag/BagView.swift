@@ -22,7 +22,7 @@ struct BagView: View {
         .padding(.horizontal, 15)
         .frame(width: UIScreen.main.bounds.width, height: 35)
         .overlay(
-            Text("MY CART")
+            Text("My Cart")
                 .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .foregroundColor(Constants.AppColor.primaryBlack)
                 .padding(.horizontal, 10)
@@ -42,13 +42,6 @@ struct BagView: View {
                 .cornerRadius(22)
         }
         .padding(.init(top: 0, leading: 15, bottom: 5, trailing: 15))
-    }
-    
-    var line: some View {
-        VStack {
-            Divider()
-        }
-        .padding(.horizontal, 15)
     }
     
     fileprivate func ApplyCoupon() -> some View {
@@ -100,9 +93,12 @@ struct BagView: View {
                         .disabled(false)
                         .frame(height: (CGFloat(self.arrCloth.count) * 130) + 20) // It should be dynamic...
                         
-                        line.padding(.top, 5)
+                        LineView()
+                            .padding(.top, 5)
+                            .padding(.horizontal, 15)
                         ApplyCoupon()
-                        line
+                        LineView()
+                            .padding(.horizontal, 15)
                         
                         VStack {
                             HStack {
@@ -141,7 +137,8 @@ struct BagView: View {
                             .padding(.top, 5)
                             .padding(.horizontal, 15)
                             
-                            line.padding(.vertical, 5)
+                            LineView()
+                                .padding(.vertical, 5)
                             
                             HStack {
                                 Text("Total Amount")
@@ -192,13 +189,6 @@ struct ItemCellTypeThree: View {
                 .foregroundColor(.gray)
                 .frame(width: 25, height: 25)
         }
-    }
-    
-    var line: some View {
-        VStack {
-            Divider()
-        }
-        .padding(.horizontal, 0)
     }
     
     var body: some View {

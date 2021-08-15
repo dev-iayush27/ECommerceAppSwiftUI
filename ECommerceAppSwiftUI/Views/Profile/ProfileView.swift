@@ -20,8 +20,8 @@ struct ProfileView: View {
         }
         .frame(width: UIScreen.main.bounds.width, height: 45)
         .overlay(
-            Text("MORE")
-                .font(.headline)
+            Text("More")
+                .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .padding(.horizontal, 10)
             , alignment: .center)
     }

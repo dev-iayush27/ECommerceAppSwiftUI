@@ -24,7 +24,6 @@ struct Shopping: View {
                 .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .foregroundColor(Constants.AppColor.primaryBlack)
                 .padding(.horizontal, 10)
-                .background(Color.white)
             , alignment: .center)
     }
     
@@ -34,9 +33,9 @@ struct Shopping: View {
             VStack {
                 NavigationBarView()
                 Picker("", selection: $selectorIndex) {
-                    Text("Woman").tag(0)
-                    Text("Man").tag(1)
-                    Text("Kids").tag(2)
+                    Text("Kids").tag(0)
+                    Text("Women").tag(1)
+                    Text("men").tag(2)
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal, 15)
@@ -61,7 +60,7 @@ struct Shopping: View {
                 if selectorIndex == 0 {
                     ScrollView(.vertical, showsIndicators: false, content: {
                         VStack(spacing: 10) {
-                            ForEach(self.arrCategory, id: \.id) { category in
+                            ForEach(self.arrCategory.kids, id: \.id) { category in
                                 CategoryRow(category: category, selectorIndex: self.selectorIndex)
                             }
                         }
@@ -70,7 +69,7 @@ struct Shopping: View {
                 } else if selectorIndex == 1 {
                     ScrollView(.vertical, showsIndicators: false, content: {
                         VStack(spacing: 10) {
-                            ForEach(self.arrCategory, id: \.id) { category in
+                            ForEach(self.arrCategory.women, id: \.id) { category in
                                 CategoryRow(category: category, selectorIndex: self.selectorIndex)
                             }
                         }
@@ -79,7 +78,7 @@ struct Shopping: View {
                 } else {
                     ScrollView(.vertical, showsIndicators: false, content: {
                         VStack(spacing: 10) {
-                            ForEach(self.arrCategory, id: \.id) { category in
+                            ForEach(self.arrCategory.men, id: \.id) { category in
                                 CategoryRow(category: category, selectorIndex: self.selectorIndex)
                             }
                         }
@@ -99,20 +98,19 @@ struct Shopping: View {
 
 struct CategoryRow: View {
     
-    var category: CategoryModel
+    var category: Category
     var selectorIndex = 0
     
     var body: some View {
-        
         HStack {
-            Text(self.category.name)
-                .font(.custom(Constants.AppFont.boldFont, size: 18))
+            Text(self.category.title)
+                .font(.custom(Constants.AppFont.semiBoldFont, size: 15))
                 .foregroundColor(Constants.AppColor.secondaryBlack)
                 .padding(.leading, 20)
             Spacer()
             Image(self.category.imageUrl)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width / 2 - 15)
         }
         .background(Constants.AppColor.lightGrayColor)
